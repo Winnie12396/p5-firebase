@@ -16,29 +16,11 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   var database = firebase.database();
   
-  function writeUserData(userId,value) {
+  export function writeUserData(userId,value) {
     database.ref(userId).set({
       data1: value,
     });
   }
 
   
-  var val = true;
-  function setup() {
-    createCanvas(windowWidth, windowHeight);
-    button = createButton('click me');
-    button.position(windowWidth/2, windowHeight/2);
-  }
   
-  function draw(){
-    background(255);
-    button.mousePressed(change);
-    text(val,windowWidth/2, windowHeight/2-30);
-  }
-  
-  function change() {
-    if (val)val = false;
-    else val = true;
-    writeUserData('/', val);
-
-  }
