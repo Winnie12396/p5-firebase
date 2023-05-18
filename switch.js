@@ -17,7 +17,7 @@ const firebaseConfig = {
   var database = firebase.database();
   
   function writeUserData(userId,value) {
-    database.ref(userId).update({
+    database.ref(userId).set({
       data1: value,
     });
   }
