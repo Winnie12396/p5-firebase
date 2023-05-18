@@ -1,4 +1,4 @@
-import { writeUserData } from "/init-firebase.js"
+import { writeUserData } from "./init-firebase.js"
 
 var val = true;
 function setup() {
