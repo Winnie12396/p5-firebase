@@ -33,7 +33,7 @@ const firebaseConfig = {
 
     // Write the new post's data simultaneously in the posts list and the user's post list.
     var updates = {};
-    updates[ uid + 'data1/'] = postData;
+    updates[ uid ] = postData;
     //updates['/user-posts/' + uid + '/' + newPostKey] = postData;
 
     return database.ref().update(updates);
