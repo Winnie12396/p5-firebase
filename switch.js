@@ -22,22 +22,6 @@ const firebaseConfig = {
     });
   }
 
-  /*function writeNewPost(uid, val) {
-    // A post entry.
-    var postData = {
-      data1: val
-    };
-
-    // Get a key for a new Post.
-    //var newPostKey = database.ref().child('posts').push().key;
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    var updates = {};
-    updates[ uid ] = postData;
-    //updates['/user-posts/' + uid + '/' + newPostKey] = postData;
-
-    return database.ref().update(updates);
-  }*/
   
   var val = true;
   function setup() {
@@ -56,5 +40,5 @@ const firebaseConfig = {
     if (val)val = false;
     else val = true;
     writeUserData('/', val);
-    //writeNewPost("/", val);
+
   }
