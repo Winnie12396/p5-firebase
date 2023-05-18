@@ -10,7 +10,8 @@ const firebaseConfig = {
     appId: "1:1068377010670:web:89f5319d23dd55ccc29eff",
     measurementId: "G-W5MP985XXQ"
   };
-  
+
+
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   var database = firebase.database();
@@ -21,23 +22,21 @@ const firebaseConfig = {
     });
   }
 
-  function writeNewPost(userId, val) {
-    const db = getDatabase();
-
+  function writeNewPost(uid, val) {
     // A post entry.
-    const postData = {
-        data1: val
+    var postData = {
+      data1: val
     };
 
     // Get a key for a new Post.
-    const newPostKey = push(child(ref(db), 'posts')).key;
+    var newPostKey = firebase.database().ref().child('posts').push().key;
 
     // Write the new post's data simultaneously in the posts list and the user's post list.
-    const updates = {};
+    var updates = {};
     updates['/posts/' + newPostKey] = postData;
     updates['/user-posts/' + uid + '/' + newPostKey] = postData;
 
-    return update(ref(db), updates);
+    return firebase.database().ref().update(updates);
   }
   
   var val = true;
