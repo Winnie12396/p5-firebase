@@ -17,12 +17,12 @@ const firebaseConfig = {
   var database = firebase.database();
   
   function writeUserData(userId,value) {
-    database.ref(userId).set({
+    database.ref(userId).update({
       data1: value,
     });
   }
 
-  function writeNewPost(uid, val) {
+  /*function writeNewPost(uid, val) {
     // A post entry.
     var postData = {
       data1: val
@@ -37,7 +37,7 @@ const firebaseConfig = {
     //updates['/user-posts/' + uid + '/' + newPostKey] = postData;
 
     return database.ref().update(updates);
-  }
+  }*/
   
   var val = true;
   function setup() {
@@ -55,6 +55,6 @@ const firebaseConfig = {
   function change() {
     if (val)val = false;
     else val = true;
-    //writeUserData('/', val);
-    writeNewPost("/", val);
+    writeUserData('/', val);
+    //writeNewPost("/", val);
   }
