@@ -28,12 +28,25 @@ const firebaseConfig = {
     createCanvas(windowWidth, windowHeight);
     button = createButton('click me');
     button.position(windowWidth/2, windowHeight/2);
+    initCircle();
+    
+  }
+
+  function initCircle() {
+    circleX = width/3;
+    circleY = height/3;
+    circleRad = 100;
   }
   
   function draw(){
     background(255);
     button.mousePressed(change);
     text(val,windowWidth/2, windowHeight/2-30);
+    fill(148, 255, 235);
+    noStroke();
+    ellipse(circleX, circleY, 100);
+    fill(0, 0, 0);
+    stroke();
   }
   
   function change() {
@@ -41,4 +54,10 @@ const firebaseConfig = {
     else val = true;
     writeUserData('/', val);
 
+  }
+
+  function mousePressed(){
+    if (dist(mouseX, mouseY, circleX, circleY) < 100){
+      change();
+    }
   }
