@@ -49,9 +49,10 @@ const firebaseConfig = {
   var val2 = 6;
   let c1, c2;
   var rectW, rectH;
+  var barY, iconSize, startX, startY;
 
   function setup() {
-    createCanvas(windowWidth, windowHeight);
+    
     button = createButton('click me');
     button.position(windowWidth/2, windowHeight/2);
     initCircle();
@@ -62,36 +63,58 @@ const firebaseConfig = {
 
     if (windowWidth <= 1200){
       rectW = Math.floor(windowWidth*0.8);
+      rectH = rectW * 2;
     }
     else{
-      rectW = 600;
+      rectW = 500;
+      rectH = 1000;
     }
     
-    rectH = Math.floor(rectW * 1.78);
-    console.log(rectW, rectH);
+    barY = Math.floor(rectH * 0.06);
+    iconSize = Math.floor(barY * 0.6);
+
+    startX = windowWidth/2 - rectW/2;
+    startY = windowHeight/2 - rectH/2;
+    
+    if (rectH > windowHeight){
+      createCanvas(windowWidth, rectH);
+    }
+    else {
+      createCanvas(windowWidth, windowHeight);
+    }
+    
+    console.log(rectW, rectH, barY);
   }
 
   function initCircle() {
-    circleX = width/3;
-    circleY = height/3;
+    circleX = windowWidth/3;
+    circleY = windowHeight/3;
     circleRad = 100;
   }
   
   function draw(){
-    //background(255);
-    for(let y=0; y<windowHeight; y++){
-      n = map(y,0,windowHeight,0,1);
+    for(let y=0; y<height; y++){
+      n = map(y,0,height,0,1);
       let newc = lerpColor(c1,c2,n);
       stroke(newc);
       line(0,y,windowWidth, y);
     }
+    
     fill(255);
-    rect(windowWidth/2 - rectW/2, windowHeight/2 - rectH/2, rectW, rectH);
+    rect(startX, startY, rectW, rectH);
     button.mousePressed(change);
     //text(val,windowWidth/2, windowHeight/2-30);
     fill(148, 255, 235);
     noStroke();
     ellipse(circleX, circleY, 100);
+    fill(0, 0, 0);
+
+    image(img, startX, startY + barY, rectW, rectW);
+    // image(); 頭像
+
+    fill(148, 255, 235);
+    rect(startX, startY + barY + rectW, rectW, barY); // the like bar
+    rect(startX, startY + rectH - barY, rectW, barY); // navigation bar
     fill(0, 0, 0);
 
   }
@@ -102,13 +125,6 @@ const firebaseConfig = {
     updateUserData(val);
   }
 
-  function drawCircle() {
-    fill(148, 255, 235);
-    //ellipse(getRandomInt(100, windowWidth-100), getRandomInt(100, windowHeight-100), 50);
-    ellipse(600, 800, 50);
-    fill(0, 0, 0);
-    
-  }
 
 
   function getRandomInt(min, max) {
