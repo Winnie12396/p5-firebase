@@ -57,6 +57,13 @@ const firebaseConfig = {
     button.position(windowWidth/2, windowHeight/2);
     initCircle();
     img = loadImage('assets/001.png');
+    like = loadImage('assets/like.png');
+    heart = loadImage('assets/heart.png');
+    post = loadImage('assets/post.png');
+    search = loadImage('assets/search.png');
+    home = loadImage('assets/home.png');
+    send = loadImage('assets/send.png');
+    comment = loadImage('assets/comment.png');
     
     c1 = color(147, 28, 173);
     c2 = color(255, 102, 0);
@@ -112,10 +119,22 @@ const firebaseConfig = {
     image(img, startX, startY + barY, rectW, rectW);
     // image(); 頭像
 
+
     fill(148, 255, 235);
-    rect(startX, startY + barY + rectW, rectW, barY); // the like bar
+    ellipse(startX + barY*0.6, startY + barY / 2, iconSize, iconSize); // 頭像for now
+    //rect(startX, startY + barY + rectW, rectW, barY); // the like bar
     rect(startX, startY + rectH - barY, rectW, barY); // navigation bar
     fill(0, 0, 0);
+
+    // like bar icons
+    image(like, startX + Math.floor(rectW * 0.05), startY + barY *1.2 + rectW, iconSize, iconSize);
+    image(comment, startX + Math.floor(rectW * 0.05) + barY*0.8, startY + barY *1.2 + rectW, iconSize, iconSize);
+    image(send, startX + Math.floor(rectW * 0.05) + barY*0.8*2, startY + barY *1.2 + rectW, iconSize, iconSize);
+
+    // navigation bar icons
+    image(home, startX + Math.floor(rectW * 0.05), startY - barY *0.8 + rectH, iconSize, iconSize);
+    image(search, startX + Math.floor(rectW * 0.05) + barY*0.8, startY - barY *0.8 + rectH, iconSize, iconSize);
+    image(post, startX + Math.floor(rectW * 0.05) + barY*0.8*2, startY - barY *0.8 + rectH, iconSize, iconSize);
 
   }
   
