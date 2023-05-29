@@ -65,11 +65,7 @@ const firebaseConfig = {
   var rectW, rectH;
   var barY, iconSize, startX, startY, likeButX, likeButY, sendButX, navIconY;
 
-  function setup() {
-    
-    //button = createButton('click me');
-    //button.position(windowWidth/2, windowHeight/2);
-    initCircle();
+  function preload() {
     img = loadImage('assets/001.png');
     like = loadImage('assets/like.png');
     likePressed = loadImage('assets/like_pink.png');
@@ -80,6 +76,11 @@ const firebaseConfig = {
     send = loadImage('assets/send.png');
     comment = loadImage('assets/comment.png');
     bookmark = loadImage('assets/share.png');  // to be changed
+  }
+
+  function setup() {
+
+    initCircle();
     
     c1 = color(147, 28, 173);
     c2 = color(255, 102, 0);
@@ -130,8 +131,6 @@ const firebaseConfig = {
     
     fill(255);
     rect(startX, startY, rectW, rectH);
-    //button.mousePressed(change);
-    //text(val,windowWidth/2, windowHeight/2-30);
     fill(148, 255, 235);
     noStroke();
     ellipse(circleX, circleY, 100);
@@ -167,7 +166,7 @@ const firebaseConfig = {
 
     
     text("ThisIsReco",likeButX, likeButY+barY*1.1);
-    text("wdfkniwevnidsubvidfunjyejgdsfjbleriubfviulreaiulrbgvleifughretjriuvn",likeButX, likeButY+barY*1.4, 70, 80);
+    text("wdfkniwevnidsubvidfunjyejgdsfjbleriubfviulreaivn",likeButX, likeButY+barY*1.4);
 
   }
 
@@ -188,7 +187,7 @@ const firebaseConfig = {
       }
       console.log("liked =", liked);
     }
-    else if (dist(mouseX, mouseY, startX + rectW - (likeButX - startX) - iconSize / 2, likeButY + iconSize/2) < iconSize / 2) { // share
+    else if (dist(mouseX, mouseY, sendButX + iconSize / 2, likeButY + iconSize / 2) < iconSize / 2) { // share
       if (shareCount >= 3) {
         shareCount += 1;
       }
