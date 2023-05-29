@@ -72,6 +72,7 @@ const firebaseConfig = {
     initCircle();
     img = loadImage('assets/001.png');
     like = loadImage('assets/like.png');
+    likePressed = loadImage('assets/like_pink.png');
     heart = loadImage('assets/heart.png');
     post = loadImage('assets/post.png');
     search = loadImage('assets/search.png');
@@ -147,7 +148,13 @@ const firebaseConfig = {
     //fill(0, 0, 0);
 
     // like bar icons
-    image(like, likeButX, likeButY, iconSize, iconSize);
+    if (liked == true) {
+      image(likePressed, likeButX, likeButY, iconSize, iconSize);
+    }
+    else {
+      image(like, likeButX, likeButY, iconSize, iconSize);
+    }
+    
     image(comment, startX + Math.floor(rectW * 0.05) + barY*0.9, likeButY, iconSize, iconSize);
     image(send, sendButX, likeButY, iconSize, iconSize);
     image(bookmark, startX + rectW - (likeButX - startX) - iconSize, likeButY, iconSize, iconSize);
@@ -170,14 +177,19 @@ const firebaseConfig = {
   }
 
   function mouseClicked(){
-    if (dist(mouseX, mouseY, likeButX + iconSize/2, likeButY + iconSize/2) < iconSize / 2){
-      //liked = true;
-      //getData();
-      updateUserData(liked, "like");
-      //liked = false;
+    if (dist(mouseX, mouseY, likeButX + iconSize/2, likeButY + iconSize/2) < iconSize / 2){ // like
+      if (liked) {
+        liked = false;
+      }
+      else {
+        liked = true;
+        
+        updateUserData(liked, "like");
+      }
+      console.log("liked =", liked);
     }
-    else if (dist(mouseX, mouseY, startX + rectW - (likeButX - startX) - iconSize / 2, likeButY + iconSize/2) < iconSize / 2) {
-      if (shareCount >= 5) {
+    else if (dist(mouseX, mouseY, startX + rectW - (likeButX - startX) - iconSize / 2, likeButY + iconSize/2) < iconSize / 2) { // share
+      if (shareCount >= 3) {
         shareCount += 1;
       }
       else {
@@ -190,4 +202,5 @@ const firebaseConfig = {
 
   function mouseDragged(event) {
     console.log(event);
+    return false;
   }
