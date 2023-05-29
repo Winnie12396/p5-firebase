@@ -49,7 +49,7 @@ const firebaseConfig = {
   var val2 = 6;
   let c1, c2;
   var rectW, rectH;
-  var barY, iconSize, startX, startY;
+  var barY, iconSize, startX, startY, likeButX, likeButY, sendButX, navIconY;
 
   function setup() {
     
@@ -90,6 +90,11 @@ const firebaseConfig = {
       createCanvas(windowWidth, windowHeight);
     }
     
+    likeButX = startX + Math.floor(rectW * 0.05);
+    likeButY = startY + barY *1.2 + rectW;
+    sendButX = startX + Math.floor(rectW * 0.05) + barY*0.9*2;
+    navIconY = startY - barY *0.8 + rectH;
+
     console.log(rectW, rectH, barY);
   }
 
@@ -117,31 +122,33 @@ const firebaseConfig = {
     fill(0, 0, 0);
 
     image(img, startX, startY + barY, rectW, rectW);
-    // image(); 頭像
+    image(heart, startX + Math.floor(rectW * 0.05), startY + barY *0.2, iconSize, iconSize);
 
 
-    fill(148, 255, 235);
-    ellipse(startX + barY*0.6, startY + barY / 2, iconSize, iconSize); // 頭像for now
+    //fill(148, 255, 235);
     //rect(startX, startY + barY + rectW, rectW, barY); // the like bar
-    rect(startX, startY + rectH - barY, rectW, barY); // navigation bar
-    fill(0, 0, 0);
+    //rect(startX, startY + rectH - barY, rectW, barY); // navigation bar
+    //fill(0, 0, 0);
 
     // like bar icons
-    image(like, startX + Math.floor(rectW * 0.05), startY + barY *1.2 + rectW, iconSize, iconSize);
-    image(comment, startX + Math.floor(rectW * 0.05) + barY*0.8, startY + barY *1.2 + rectW, iconSize, iconSize);
-    image(send, startX + Math.floor(rectW * 0.05) + barY*0.8*2, startY + barY *1.2 + rectW, iconSize, iconSize);
+    image(like, likeButX, likeButY, iconSize, iconSize);
+    image(comment, startX + Math.floor(rectW * 0.05) + barY*0.9, likeButY, iconSize, iconSize);
+    image(send, sendButX, likeButY, iconSize, iconSize);
 
     // navigation bar icons
-    image(home, startX + Math.floor(rectW * 0.05), startY - barY *0.8 + rectH, iconSize, iconSize);
-    image(search, startX + Math.floor(rectW * 0.05) + barY*0.8, startY - barY *0.8 + rectH, iconSize, iconSize);
-    image(post, startX + Math.floor(rectW * 0.05) + barY*0.8*2, startY - barY *0.8 + rectH, iconSize, iconSize);
+    image(home, startX + Math.floor(rectW * 0.10), navIconY, iconSize, iconSize);
+    image(search, startX + Math.floor(rectW * 0.35), navIconY, iconSize, iconSize);
+    image(post, startX + Math.floor(rectW * 0.6), navIconY, iconSize, iconSize);
+    image(heart, startX + Math.floor(rectW * 0.84), navIconY, iconSize, iconSize);
+
 
   }
   
   function change() {
-    if (val)val = false;
+    if (val) val = false;
     else val = true;
     updateUserData(val);
+    console.log(val);
   }
 
 
@@ -150,8 +157,11 @@ const firebaseConfig = {
       return Math.floor(Math.random() * max) + min;
   }
 
-  function mousePressed(){
-    if (dist(mouseX, mouseY, circleX, circleY) < 100){
+  function mouseClicked(){
+    //if (dist(mouseX, mouseY, circleX, circleY) < 100){
+      //change();
+    //}
+    if (dist(mouseX, mouseY, likeButX + iconSize/2, likeButY + iconSize/2) < iconSize / 2){
       change();
     }
   }
