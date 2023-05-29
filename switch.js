@@ -64,6 +64,7 @@ const firebaseConfig = {
     home = loadImage('assets/home.png');
     send = loadImage('assets/send.png');
     comment = loadImage('assets/comment.png');
+    bookmark = loadImage('assets/share.png');  // to be changed
     
     c1 = color(147, 28, 173);
     c2 = color(255, 102, 0);
@@ -135,6 +136,7 @@ const firebaseConfig = {
     image(like, likeButX, likeButY, iconSize, iconSize);
     image(comment, startX + Math.floor(rectW * 0.05) + barY*0.9, likeButY, iconSize, iconSize);
     image(send, sendButX, likeButY, iconSize, iconSize);
+    image(bookmark, startX + rectW - (likeButX - startX) - iconSize, likeButY, iconSize, iconSize);
 
     // navigation bar icons
     image(home, startX + Math.floor(rectW * 0.10), navIconY, iconSize, iconSize);
@@ -143,8 +145,8 @@ const firebaseConfig = {
     image(heart, startX + Math.floor(rectW * 0.84), navIconY, iconSize, iconSize);
 
     
-    text("ThisIsReco",likeButX, likeButY+barY*1.2);
-    text("wdfkniwevnidsubvidfunjyejgdsretjriuvn",likeButX, likeButY+barY*1.7);
+    text("ThisIsReco",likeButX, likeButY+barY*1.1);
+    text("wdfkniwevnidsubvidfunjyejgdsfjbleriubfviulreaiulrbgvleifughretjriuvn",likeButX, likeButY+barY*1.4, 70, 80);
 
   }
   
