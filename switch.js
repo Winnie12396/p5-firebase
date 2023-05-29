@@ -15,46 +15,60 @@ const firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   var database = firebase.database();
-  
-  function writeUserData(userId,value) {
-    database.ref(userId).set({
-      data1: value,
-    });
-  }
 
-  function updateUserData(val) {
+  function updateUserData(val, where) {
     var updates = {};
 
-    if (typeof(val) == "boolean") {
+    if (where == "share") {
       var postData = {
         val
       };
-      updates['/test/data1' ] = postData;
+      updates['/test/share' ] = postData;
     }
-    else if (typeof(val) == "number"){
+    else if (where == "drag"){
       var postData = {
         val
       };
-      updates['/test/data2'] = postData;
+      updates['/test/drag'] = postData;
+    }
+    else if (where == "like"){
+      var postData = {
+        val
+      };
+      updates['/test/like'] = postData;
     }
 
-    
-
-  
     return firebase.database().ref().update(updates);
   }
 
+  /*function getData() {
+    const dbRef = firebase.database().ref();
+    dbRef.child("test").child("like").get().then((snapshot) => {
+      if (snapshot.exists()) {
+        console.log(snapshot.val());
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+
+  }*/
+
+
+
   
-  var val = true;
-  var val2 = 6;
+  var shareCount = 0;
+  var dragCount = 0;
+  var liked = false;
   let c1, c2;
   var rectW, rectH;
   var barY, iconSize, startX, startY, likeButX, likeButY, sendButX, navIconY;
 
   function setup() {
     
-    button = createButton('click me');
-    button.position(windowWidth/2, windowHeight/2);
+    //button = createButton('click me');
+    //button.position(windowWidth/2, windowHeight/2);
     initCircle();
     img = loadImage('assets/001.png');
     like = loadImage('assets/like.png');
@@ -115,7 +129,7 @@ const firebaseConfig = {
     
     fill(255);
     rect(startX, startY, rectW, rectH);
-    button.mousePressed(change);
+    //button.mousePressed(change);
     //text(val,windowWidth/2, windowHeight/2-30);
     fill(148, 255, 235);
     noStroke();
@@ -149,14 +163,6 @@ const firebaseConfig = {
     text("wdfkniwevnidsubvidfunjyejgdsfjbleriubfviulreaiulrbgvleifughretjriuvn",likeButX, likeButY+barY*1.4, 70, 80);
 
   }
-  
-  function change() {
-    if (val) val = false;
-    else val = true;
-    updateUserData(val);
-    console.log(val);
-  }
-
 
 
   function getRandomInt(min, max) {
@@ -164,11 +170,21 @@ const firebaseConfig = {
   }
 
   function mouseClicked(){
-    //if (dist(mouseX, mouseY, circleX, circleY) < 100){
-      //change();
-    //}
     if (dist(mouseX, mouseY, likeButX + iconSize/2, likeButY + iconSize/2) < iconSize / 2){
-      change();
+      //liked = true;
+      //getData();
+      updateUserData(liked, "like");
+      //liked = false;
+    }
+    else if (dist(mouseX, mouseY, startX + rectW - (likeButX - startX) - iconSize / 2, likeButY + iconSize/2) < iconSize / 2) {
+      if (shareCount >= 5) {
+        shareCount += 1;
+      }
+      else {
+        updateUserData(true, "share");
+        shareCount = 0;
+      }
+      
     }
   }
 
