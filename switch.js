@@ -94,7 +94,7 @@ const firebaseConfig = {
     likeButY = startY + barY *1.2 + rectW;
     sendButX = startX + Math.floor(rectW * 0.05) + barY*0.9*2;
     navIconY = startY - barY *0.8 + rectH;
-
+    textSize(30);
     console.log(rectW, rectH, barY);
   }
 
@@ -122,7 +122,8 @@ const firebaseConfig = {
     fill(0, 0, 0);
 
     image(img, startX, startY + barY, rectW, rectW);
-    image(heart, startX + Math.floor(rectW * 0.05), startY + barY *0.2, iconSize, iconSize);
+    image(heart, likeButX, startY + barY *0.2, iconSize, iconSize);
+    text("ThisIsReco",startX + Math.floor(rectW * 0.09) + iconSize, startY + iconSize);
 
 
     //fill(148, 255, 235);
@@ -141,6 +142,9 @@ const firebaseConfig = {
     image(post, startX + Math.floor(rectW * 0.6), navIconY, iconSize, iconSize);
     image(heart, startX + Math.floor(rectW * 0.84), navIconY, iconSize, iconSize);
 
+    
+    text("ThisIsReco",likeButX, likeButY+barY*1.2);
+    text("wdfkniwevnidsubvidfunjyejgdsretjriuvn",likeButX, likeButY+barY*1.7);
 
   }
   
