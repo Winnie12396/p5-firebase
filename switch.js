@@ -15,45 +15,53 @@ const firebaseConfig = {
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   var database = firebase.database();
+  //var retrieveStore;
 
   function updateUserData(val, where) {
-    var updates = {};
+    //var updates = {};
 
     if (where == "share") {
       var postData = {
-        val
+        share: val
       };
-      updates['/test/share' ] = postData;
+      //updates['/share' ] = postData;
     }
     else if (where == "drag"){
       var postData = {
-        val
+        drag: val
       };
-      updates['/test/drag'] = postData;
+      //updates['/drag'] = postData;
     }
     else if (where == "like"){
       var postData = {
-        val
+        like: val
       };
-      updates['/test/like'] = postData;
+      //updates['/like'] = postData;
     }
 
-    return firebase.database().ref().update(updates);
+    return firebase.database().ref().update(postData);
   }
 
-  /*function getData() {
-    const dbRef = firebase.database().ref();
-    dbRef.child("test").child("like").get().then((snapshot) => {
+  function retrieveData(item) {
+    //const dbRef = database.ref();
+    database.ref("/" + item).once("value").then((snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot.val());
+        //console.log(snapshot.val(), typeof(snapshot.val()));
+        var retrieveStore = snapshot.val();
+        //console.log(retrieveStore);
+        if (item == "share") {
+          updateUserData(retrieveStore + 1, item);
+        }
       } else {
         console.log("No data available");
       }
     }).catch((error) => {
       console.error(error);
     });
+    
+  }
 
-  }*/
+
 
 
 
@@ -61,9 +69,11 @@ const firebaseConfig = {
   var shareCount = 0;
   var dragCount = 0;
   var liked = false;
+
   let c1, c2;
   var rectW, rectH;
   var barY, iconSize, startX, startY, likeButX, likeButY, sendButX, navIconY;
+
 
   function preload() {
     img = loadImage('assets/001.png');
@@ -136,7 +146,7 @@ const firebaseConfig = {
     ellipse(circleX, circleY, 100);
     fill(0, 0, 0);
 
-    image(img, startX, startY + barY, rectW, rectW);
+    image(img, startX, startY + barY, rectW, rectW);  // images for show
     image(heart, likeButX, startY + barY *0.2, iconSize, iconSize);
     text("ThisIsReco",startX + Math.floor(rectW * 0.09) + iconSize, startY + iconSize);
 
@@ -188,18 +198,16 @@ const firebaseConfig = {
       console.log("liked =", liked);
     }
     else if (dist(mouseX, mouseY, sendButX + iconSize / 2, likeButY + iconSize / 2) < iconSize / 2) { // share
-      if (shareCount >= 3) {
+      console.log("clicked");
+      if (shareCount < 2) {
         shareCount += 1;
       }
       else {
-        updateUserData(true, "share");
+        retrieveData("share");        
         shareCount = 0;
       }
       
     }
   }
 
-  function mouseDragged(event) {
-    console.log(event);
-    return false;
-  }
+
