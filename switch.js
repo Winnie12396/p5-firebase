@@ -85,7 +85,7 @@ const firebaseConfig = {
     home = loadImage('assets/home.png');
     send = loadImage('assets/send.png');
     comment = loadImage('assets/comment.png');
-    bookmark = loadImage('assets/share.png');  // to be changed
+    bookmark = loadImage('assets/bookmark.png');
   }
 
   function setup() {
@@ -123,6 +123,13 @@ const firebaseConfig = {
     navIconY = startY - barY *0.8 + rectH;
     textSize(30);
     console.log(rectW, rectH, barY);
+
+    for(let y=0; y<height; y++){
+      n = map(y,0,height,0,1);
+      let newc = lerpColor(c1,c2,n);
+      stroke(newc);
+      line(0,y,windowWidth, y);
+    }
   }
 
   function initCircle() {
@@ -132,12 +139,7 @@ const firebaseConfig = {
   }
   
   function draw(){
-    for(let y=0; y<height; y++){
-      n = map(y,0,height,0,1);
-      let newc = lerpColor(c1,c2,n);
-      stroke(newc);
-      line(0,y,windowWidth, y);
-    }
+    
     
     fill(255);
     rect(startX, startY, rectW, rectH);
@@ -174,7 +176,9 @@ const firebaseConfig = {
     image(post, startX + Math.floor(rectW * 0.6), navIconY, iconSize, iconSize);
     image(heart, startX + Math.floor(rectW * 0.84), navIconY, iconSize, iconSize);
 
-    
+    fill(148, 255, 235);
+    rect(likeButX, likeButY + barY * 0.95, Math.floor(rectW * 0.9), Math.floor(rectH * 0.3));
+    fill(0);
     text("ThisIsReco",likeButX, likeButY+barY*1.1);
     text("wdfkniwevnidsubvidfunjyejgdsfjbleriubfviulreaivn",likeButX, likeButY+barY*1.4);
 
