@@ -130,17 +130,6 @@ const firebaseConfig = {
       stroke(newc);
       line(0,y,windowWidth, y);
     }
-  }
-
-  function initCircle() {
-    circleX = windowWidth/3;
-    circleY = windowHeight/3;
-    circleRad = 100;
-  }
-  
-  function draw(){
-    
-    
     fill(255);
     rect(startX, startY, rectW, rectH);
     fill(148, 255, 235);
@@ -179,8 +168,26 @@ const firebaseConfig = {
     fill(148, 255, 235);
     rect(likeButX, likeButY + barY * 0.95, Math.floor(rectW * 0.9), Math.floor(rectH * 0.3));
     fill(0);
-    text("ThisIsReco",likeButX, likeButY+barY*1.1);
-    text("wdfkniwevnidsubvidfunjyejgdsfjbleriubfviulreaivn",likeButX, likeButY+barY*1.4);
+  }
+
+  function initCircle() {
+    circleX = windowWidth/3;
+    circleY = windowHeight/3;
+    circleRad = 100;
+  }
+  
+  function draw(){
+    
+    // like bar icons
+    if (liked == true) {
+      image(likePressed, likeButX, likeButY, iconSize, iconSize);
+    }
+    else {
+      image(like, likeButX, likeButY, iconSize, iconSize);
+    }
+    
+    //text("ThisIsReco",likeButX, likeButY+barY*1.1);
+    //text("wdfkniwevnidsubvidfunjyejgdsfjbleriubfviulreaivn",likeButX, likeButY+barY*1.4);
 
   }
 
