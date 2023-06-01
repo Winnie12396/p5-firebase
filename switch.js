@@ -69,10 +69,13 @@ const firebaseConfig = {
   var shareCount = 0;
   var dragCount = 0;
   var liked = false;
+  var disliked = false;
+  var sent = false;
+  var bookmarked = false;
 
   let c1, c2;
   var rectW, rectH;
-  var barY, iconSize, startX, startY, likeButX, likeButY, sendButX, navIconY;
+  var barY, iconSize, startX, startY, likeButX, likeButY, sendButX, navIconY, bookmarkX;
 
 
   function preload() {
@@ -84,14 +87,14 @@ const firebaseConfig = {
     search = loadImage('assets/search.png');
     home = loadImage('assets/home.png');
     send = loadImage('assets/send.png');
+    //sent = loadImage('assets/sent.png');
     comment = loadImage('assets/comment.png');
     bookmark = loadImage('assets/bookmark.png');
+    bookmarkFilled = loadImage('assets/bookmark_filled.png');
   }
 
   function setup() {
 
-    initCircle();
-    
     c1 = color(147, 28, 173);
     c2 = color(255, 102, 0);
 
@@ -106,7 +109,6 @@ const firebaseConfig = {
     
     barY = Math.floor(rectH * 0.06);
     iconSize = Math.floor(barY * 0.6);
-
     startX = windowWidth/2 - rectW/2;
     startY = windowHeight/2 - rectH/2;
     
@@ -121,8 +123,9 @@ const firebaseConfig = {
     likeButY = startY + barY *1.2 + rectW;
     sendButX = startX + Math.floor(rectW * 0.05) + barY*0.9*2;
     navIconY = startY - barY *0.8 + rectH;
-    textSize(30);
-    console.log(rectW, rectH, barY);
+    bookmarkX = startX + rectW - (likeButX - startX) - iconSize;
+    //textSize(30);
+    //console.log(rectW, rectH, barY);
 
     for(let y=0; y<height; y++){
       n = map(y,0,height,0,1);
@@ -130,15 +133,15 @@ const firebaseConfig = {
       stroke(newc);
       line(0,y,windowWidth, y);
     }
+
+    noStroke();
     fill(255);
     rect(startX, startY, rectW, rectH);
-    fill(148, 255, 235);
-    noStroke();
-    ellipse(circleX, circleY, 100);
     fill(0, 0, 0);
 
     image(img, startX, startY + barY, rectW, rectW);  // images for show
     image(heart, likeButX, startY + barY *0.2, iconSize, iconSize);
+    textSize(30);
     text("ThisIsReco",startX + Math.floor(rectW * 0.09) + iconSize, startY + iconSize);
 
 
@@ -148,16 +151,10 @@ const firebaseConfig = {
     //fill(0, 0, 0);
 
     // like bar icons
-    if (liked == true) {
-      image(likePressed, likeButX, likeButY, iconSize, iconSize);
-    }
-    else {
-      image(like, likeButX, likeButY, iconSize, iconSize);
-    }
-    
+    image(like, likeButX, likeButY, iconSize, iconSize);    
     image(comment, startX + Math.floor(rectW * 0.05) + barY*0.9, likeButY, iconSize, iconSize);
     image(send, sendButX, likeButY, iconSize, iconSize);
-    image(bookmark, startX + rectW - (likeButX - startX) - iconSize, likeButY, iconSize, iconSize);
+    image(bookmark, bookmarkX, likeButY, iconSize, iconSize);
 
     // navigation bar icons
     image(home, startX + Math.floor(rectW * 0.10), navIconY, iconSize, iconSize);
@@ -169,12 +166,6 @@ const firebaseConfig = {
     rect(likeButX, likeButY + barY * 0.95, Math.floor(rectW * 0.9), Math.floor(rectH * 0.3));
     fill(0);
   }
-
-  function initCircle() {
-    circleX = windowWidth/3;
-    circleY = windowHeight/3;
-    circleRad = 100;
-  }
   
   function draw(){
     
@@ -185,9 +176,14 @@ const firebaseConfig = {
     else {
       image(like, likeButX, likeButY, iconSize, iconSize);
     }
+
+    if (bookmarked == true) {
+      image(bookmarkFilled, bookmarkX, likeButY, iconSize, iconSize);
+    }
+    else {
+      image(bookmark, bookmarkX, likeButY, iconSize, iconSize);
+    }
     
-    //text("ThisIsReco",likeButX, likeButY+barY*1.1);
-    //text("wdfkniwevnidsubvidfunjyejgdsfjbleriubfviulreaivn",likeButX, likeButY+barY*1.4);
 
   }
 
@@ -197,18 +193,17 @@ const firebaseConfig = {
   }
 
   function mouseClicked(){
-    if (dist(mouseX, mouseY, likeButX + iconSize/2, likeButY + iconSize/2) < iconSize / 2){ // like
+    if (dist(mouseX, mouseY, likeButX + iconSize/2, likeButY + iconSize/2) < iconSize * 0.6){ // like
       if (liked) {
         liked = false;
       }
       else {
-        liked = true;
-        
+        liked = true;        
         updateUserData(liked, "like");
       }
       console.log("liked =", liked);
     }
-    else if (dist(mouseX, mouseY, sendButX + iconSize / 2, likeButY + iconSize / 2) < iconSize / 2) { // share
+    else if (dist(mouseX, mouseY, sendButX + iconSize / 2, likeButY + iconSize / 2) < iconSize * 0.6) { // share
       console.log("clicked");
       if (shareCount < 2) {
         shareCount += 1;
@@ -217,7 +212,21 @@ const firebaseConfig = {
         retrieveData("share");        
         shareCount = 0;
       }
+      if (sent) {
+        sent = false;
+      }
+      else {
+        sent = true;
+      }
       
+    }
+    else if (dist(mouseX, mouseY, bookmarkX + iconSize / 2, likeButY + iconSize / 2) < iconSize * 0.6){ // bookmark
+      if (bookmarked) {
+        bookmarked = false;
+      }
+      else {
+        bookmarked = true;
+      }
     }
   }
 
