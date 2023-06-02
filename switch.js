@@ -67,9 +67,9 @@ const firebaseConfig = {
 
   
   var shareCount = 0;
-  var dragCount = 0;
+  //var dragCount = 0;
   var liked = false;
-  var disliked = false;
+  //var disliked = false;
   var sent = false;
   var bookmarked = false;
 
@@ -79,7 +79,7 @@ const firebaseConfig = {
 
 
   function preload() {
-    img = loadImage('assets/001.png');
+    img = loadImage('assets/002.png');
     like = loadImage('assets/like.png');
     likePressed = loadImage('assets/like_pink.png');
     heart = loadImage('assets/heart.png');
@@ -144,12 +144,6 @@ const firebaseConfig = {
     textSize(30);
     text("ThisIsReco",startX + Math.floor(rectW * 0.09) + iconSize, startY + iconSize);
 
-
-    //fill(148, 255, 235);
-    //rect(startX, startY + barY + rectW, rectW, barY); // the like bar
-    //rect(startX, startY + rectH - barY, rectW, barY); // navigation bar
-    //fill(0, 0, 0);
-
     // like bar icons
     image(like, likeButX, likeButY, iconSize, iconSize);    
     image(comment, startX + Math.floor(rectW * 0.05) + barY*0.9, likeButY, iconSize, iconSize);
@@ -162,8 +156,7 @@ const firebaseConfig = {
     image(post, startX + Math.floor(rectW * 0.6), navIconY, iconSize, iconSize);
     image(heart, startX + Math.floor(rectW * 0.84), navIconY, iconSize, iconSize);
 
-    //fill(148, 255, 235);
-    //rect(likeButX, likeButY + barY * 0.95, Math.floor(rectW * 0.9), Math.floor(rectH * 0.3));
+    // post
     image(postText, startX, likeButY + barY * 0.6, rectW, Math.floor(rectH * 0.3));
     fill(0);
   }
