@@ -87,10 +87,10 @@ const firebaseConfig = {
     search = loadImage('assets/search.png');
     home = loadImage('assets/home.png');
     send = loadImage('assets/send.png');
-    //sent = loadImage('assets/sent.png');
     comment = loadImage('assets/comment.png');
     bookmark = loadImage('assets/bookmark.png');
     bookmarkFilled = loadImage('assets/bookmark_filled.png');
+    postText = loadImage('assets/post_text.png');
   }
 
   function setup() {
@@ -162,8 +162,9 @@ const firebaseConfig = {
     image(post, startX + Math.floor(rectW * 0.6), navIconY, iconSize, iconSize);
     image(heart, startX + Math.floor(rectW * 0.84), navIconY, iconSize, iconSize);
 
-    fill(148, 255, 235);
-    rect(likeButX, likeButY + barY * 0.95, Math.floor(rectW * 0.9), Math.floor(rectH * 0.3));
+    //fill(148, 255, 235);
+    //rect(likeButX, likeButY + barY * 0.95, Math.floor(rectW * 0.9), Math.floor(rectH * 0.3));
+    image(postText, startX, likeButY + barY * 0.6, rectW, Math.floor(rectH * 0.3));
     fill(0);
   }
   
